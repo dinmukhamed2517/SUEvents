@@ -1,5 +1,7 @@
 package kz.sdk.suevents.fragments
 
+import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
@@ -42,6 +44,21 @@ class ProfileFragment:BaseFragment<FragmentProfileBinding>(FragmentProfileBindin
             binding.backBtn.setOnClickListener {
                 findNavController().popBackStack()
             }
+            binding.ava.setOnClickListener{
+                findNavController().navigate(
+                    R.id.action_profileFragment_to_updateProfileFragment
+                )
+            }
+            binding.about.setOnClickListener {
+                findNavController().navigate(R.id.action_profileFragment_to_aboutFragment)
+            }
+
+            binding.support.setOnClickListener{
+                findNavController().navigate(R.id.action_profileFragment_to_helpFragment)
+            }
+            binding.websiteBtn.setOnClickListener {
+                openConferenceUrl()
+            }
             binding.name.text = it?.name
             binding.email.text = firebaseAuth.currentUser?.email
             if (it?.pictureUrl != null) {
@@ -52,6 +69,13 @@ class ProfileFragment:BaseFragment<FragmentProfileBinding>(FragmentProfileBindin
                 binding.ava.setImageResource(R.drawable.profile_icon)
             }
         }
+    }
+
+    private fun openConferenceUrl() {
+        val url = "https://satbayev.university/ru"
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.data = Uri.parse(url)
+        startActivity(intent)
     }
 
 

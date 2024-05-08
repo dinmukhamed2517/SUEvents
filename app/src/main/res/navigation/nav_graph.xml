@@ -40,6 +40,15 @@
         <action
             android:id="@+id/action_profileFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_helpFragment"
+            app:destination="@id/helpFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_aboutFragment"
+            app:destination="@id/aboutFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_updateProfileFragment"
+            app:destination="@id/updateProfileFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -83,4 +92,16 @@
         android:id="@+id/adminFragment"
         android:name="kz.sdk.suevents.fragments.AdminFragment"
         android:label="AdminFragment" />
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="kz.sdk.suevents.fragments.AboutFragment"
+        android:label="AboutFragment" />
+    <fragment
+        android:id="@+id/helpFragment"
+        android:name="kz.sdk.suevents.fragments.HelpFragment"
+        android:label="HelpFragment" />
+    <fragment
+        android:id="@+id/updateProfileFragment"
+        android:name="kz.sdk.suevents.fragments.UpdateProfileFragment"
+        android:label="UpdateProfileFragment" />
 </navigation>
