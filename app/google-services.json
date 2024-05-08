@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1930995325",
+    "project_id": "su-events-b1421",
+    "storage_bucket": "su-events-b1421.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1930995325:android:b1acfb2a27f1e3fcc47314",
+        "android_client_info": {
+          "package_name": "kz.sdk.suevents"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBb4NjIkNmb4-53Z1HkRXs8XjbVmOL8ir4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
