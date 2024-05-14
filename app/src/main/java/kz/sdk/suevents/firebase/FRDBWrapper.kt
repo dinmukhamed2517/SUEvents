@@ -60,7 +60,7 @@ abstract class FRDBWrapper<T> {
         }
     }
     fun deleteProductFromList(value:String){
-        val ref = db.getReference(getTableName()).child("cart").child(value)
+        val ref = db.getReference(getTableName()).child("favorites").child(value)
         ref.removeValue()
     }
 
