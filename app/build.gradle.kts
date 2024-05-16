@@ -6,6 +6,8 @@ plugins {
     id("kotlin-parcelize")
     id ("dagger.hilt.android.plugin")
     id("com.google.gms.google-services")
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
+
 
 }
 
@@ -41,6 +43,8 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        buildConfig = true
+
     }
 }
 
@@ -71,6 +75,9 @@ dependencies {
     kapt ("com.google.dagger:hilt-compiler:2.46")
     implementation ("com.github.bumptech.glide:glide:4.13.0")
     implementation(platform("com.google.firebase:firebase-bom:32.7.4"))
+
+    implementation("com.google.android.gms:play-services-maps:18.2.0")
+
 
     implementation("com.google.firebase:firebase-analytics")
 

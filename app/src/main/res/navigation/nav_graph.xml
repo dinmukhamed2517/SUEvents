@@ -11,6 +11,9 @@
         <action
             android:id="@+id/action_homeFragment_to_eventDetailsFragment"
             app:destination="@id/eventDetailsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
     </fragment>
     <fragment
         android:id="@+id/favoritesFragment"
@@ -49,6 +52,12 @@
         <action
             android:id="@+id/action_profileFragment_to_updateProfileFragment"
             app:destination="@id/updateProfileFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_choiceFragment"
+            app:destination="@id/choiceFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -104,4 +113,31 @@
         android:id="@+id/updateProfileFragment"
         android:name="kz.sdk.suevents.fragments.UpdateProfileFragment"
         android:label="UpdateProfileFragment" />
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="kz.sdk.suevents.fragments.MapFragment"
+        android:label="MapFragment" />
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="kz.sdk.suevents.fragments.SearchFragment"
+        android:label="SearchFragment" >
+        <action
+            android:id="@+id/action_searchFragment_to_eventDetailsFragment"
+            app:destination="@id/eventDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/choiceFragment"
+        android:name="kz.sdk.suevents.fragments.ChoiceFragment"
+        android:label="ChoiceFragment" >
+        <action
+            android:id="@+id/action_choiceFragment_to_adminFragment"
+            app:destination="@id/adminFragment" />
+        <action
+            android:id="@+id/action_choiceFragment_to_deleteEventFragment"
+            app:destination="@id/deleteEventFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/deleteEventFragment"
+        android:name="kz.sdk.suevents.fragments.DeleteEventFragment"
+        android:label="DeleteEventFragment" />
 </navigation>

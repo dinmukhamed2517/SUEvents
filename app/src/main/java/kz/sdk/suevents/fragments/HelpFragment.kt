@@ -15,17 +15,6 @@ class HelpFragment:BaseFragment<FragmentHelpBinding>(FragmentHelpBinding::inflat
 
             }
 
-            confirmButton.setOnClickListener {
-                if(etLetter.text.toString().isEmpty()){
-                    showCustomCancelDialog("Ошибка", "Пожалуйста заполните письмо")
-                    tilLetter.isErrorEnabled = true
-                    tilLetter.error = "Заполните"
-                }
-                else{
-                    tilLetter.isErrorEnabled = false
-                    showCustomDialog("Успех", "Ваше письмо отправлено в министерство. Спасибо за помощь!")
-                }
-            }
         }
     }
 

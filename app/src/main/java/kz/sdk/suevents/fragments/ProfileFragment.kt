@@ -30,7 +30,7 @@ class ProfileFragment:BaseFragment<FragmentProfileBinding>(FragmentProfileBindin
 
         with(binding){
             adminBtn.setOnClickListener {
-                findNavController().navigate(R.id.action_profileFragment_to_adminFragment)
+                findNavController().navigate(R.id.action_profileFragment_to_choiceFragment)
             }
         }
         userDao.getDataLiveData.observe(this){
@@ -41,13 +41,13 @@ class ProfileFragment:BaseFragment<FragmentProfileBinding>(FragmentProfileBindin
             binding.signOutBtn.setOnClickListener {
                 signOut()
             }
-            binding.backBtn.setOnClickListener {
-                findNavController().popBackStack()
-            }
             binding.ava.setOnClickListener{
                 findNavController().navigate(
                     R.id.action_profileFragment_to_updateProfileFragment
                 )
+            }
+            binding.map.setOnClickListener {
+                findNavController().navigate(R.id.action_profileFragment_to_mapFragment)
             }
             binding.about.setOnClickListener {
                 findNavController().navigate(R.id.action_profileFragment_to_aboutFragment)

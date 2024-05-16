@@ -9,15 +9,21 @@ import android.net.Uri
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat.startActivityForResult
+import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.card.MaterialCardView
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import dagger.hilt.android.AndroidEntryPoint
 import kz.sdk.suevents.R
+import kz.sdk.suevents.adapters.FilterAdapter
 import kz.sdk.suevents.base.BaseFragment
 import kz.sdk.suevents.databinding.FragmentAdminBinding
 import kz.sdk.suevents.models.Event
+import kz.sdk.suevents.models.Filter
 import java.util.Calendar
 import java.util.UUID
 import javax.inject.Inject
@@ -26,10 +32,16 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class AdminFragment:BaseFragment<FragmentAdminBinding>(FragmentAdminBinding::inflate) {
 
-    private lateinit var selectedDate:String
-    private lateinit var selectedTime:String
+    private lateinit var selectedDate: String
+    private lateinit var selectedTime: String
+    override var showBottomNavigation = false
+    private lateinit var filterAdapter: FilterAdapter
+    private var selectedFilterTitle: String? = null
+    private var selectedCategory: String? = null
+    private lateinit var categoryAdapter: FilterAdapter
 
     private var imageUri: Uri? = null
+
     @Inject
     lateinit var storageReference: StorageReference
 
@@ -39,12 +51,63 @@ class AdminFragment:BaseFragment<FragmentAdminBinding>(FragmentAdminBinding::inf
         uri?.let {
             binding.img.setImageURI(it)
             imageUri = it
+            binding.textImg.isVisible = false
         }
     }
+
+    private fun setupRecyclerView() {
+        filterAdapter = FilterAdapter().apply {
+            itemClick = { filter ->
+                selectedFilterTitle = filter.title
+                Toast.makeText(context, "Выбрано: ${filter.title}", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        binding.recyclerView.apply {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            adapter = filterAdapter
+        }
+
+        val filters = listOf(
+            Filter(1, "ИГиНД"),
+            Filter(2, "ГМИ"),
+            Filter(3, "ИАиИТ"),
+            Filter(4, "ИЭиМ"),
+            Filter(5, "ИАиС"),
+            Filter(6, "ШТИиЛ"),
+            Filter(7, "ИУП"),
+            Filter(8, "ИВД"),
+            Filter(9, "ИЦТиПР"),
+        )
+        filterAdapter.submitList(filters)
+    }
+
+    private fun setupCategoryRecycler() {
+        categoryAdapter = FilterAdapter().apply {
+            itemClick = { filter ->
+                selectedCategory = filter.title
+                Toast.makeText(context, "Выбрано: ${filter.title}", Toast.LENGTH_SHORT).show()
+            }
+        }
+        binding.categoryRecycler.apply {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            adapter = categoryAdapter
+        }
+        val categories = listOf(
+            Filter(10, "Олимпиады"),
+            Filter(11, "Конференций"),
+            Filter(12, "Семинары"),
+        )
+        categoryAdapter.submitList(categories)
+    }
+
+
 
 
     override fun onBindView() {
         super.onBindView()
+        setupRecyclerView()
+        setupCategoryRecycler()
         binding.dateBtn.setOnClickListener {
             showDatePickerDialog(requireContext()){year, month, dayOfMonth ->
                 selectedDate = "$dayOfMonth/${month + 1}/$year"
@@ -91,15 +154,23 @@ class AdminFragment:BaseFragment<FragmentAdminBinding>(FragmentAdminBinding::inf
             }
         }
     }
-    private fun saveEventToDatabase(name: String, note: String, imageUrl: String, date:String, time:String) {
+    private fun saveEventToDatabase(name: String, note: String, imageUrl: String, date: String, time: String) {
         val databaseReference = FirebaseDatabase.getInstance().getReference("Events")
-        val eventId = databaseReference.push().key  // Generates a unique id for the event
-
-        val event = Event(title =  name, description = note, img = imageUrl, date = date, time = time)
+        val eventId = databaseReference.push().key
+        val event = Event(
+            id = eventId,
+            title = name,
+            description = note,
+            img = imageUrl,
+            date = date,
+            time = time,
+            type = selectedFilterTitle,
+            category = selectedCategory,
+        )
         eventId?.let {
             databaseReference.child(it).setValue(event).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    Toast.makeText(context, "Event created successfully!", Toast.LENGTH_SHORT).show()
+                    showCustomDialog("Успех", "Событие создано успешно!")
                 } else {
                     Toast.makeText(context, "Failed to create event: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
                 }

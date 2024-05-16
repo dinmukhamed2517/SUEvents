@@ -11,4 +11,6 @@ data class Event(
     var date:String? = null,
     var time:String? = null,
     var description:String? = null,
+    var type:String? = null,
+    var category:String? = null,
 ): Parcelable
